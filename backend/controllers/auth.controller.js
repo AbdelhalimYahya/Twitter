@@ -6,6 +6,7 @@ export const signup = async (req, res) => {
 	try {
 		const { fullName, username, email, password } = req.body;
 
+        // Regular expression for email and make the validations for the email and the username and the password
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(email)) {
 			return res.status(400).json({ error: "Invalid email format" });
@@ -25,6 +26,7 @@ export const signup = async (req, res) => {
 			return res.status(400).json({ error: "Password must be at least 6 characters long" });
 		}
 
+        // Hashing the password
 		const salt = await bcrypt.genSalt(10);
 		const hashedPassword = await bcrypt.hash(password, salt);
 
