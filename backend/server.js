@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user.route.js";
 import { v2 as cloudinary } from "cloudinary";
 import postRoutes from "./routes/post.route.js";
+import notificationRoutes from "./routes/notification.route.js";
 
 dotenv.config();
 
@@ -18,13 +19,14 @@ cloudinary.config({
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true })); // to parse form data
 app.use(cookieParser());
 
 app.use("/api/auth",authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
